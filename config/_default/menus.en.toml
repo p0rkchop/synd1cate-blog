@@ -1,0 +1,12 @@
+# -- Main Menu --
+# Acceptable parameters are name, pageRef, page, url, title, weight.
+
+[[main]]
+  name = "Posts"
+  pageRef = "posts"
+  weight = 10
+
+[[main]]
+  name = "Tags"
+  pageRef = "tags"
+  weight = 20

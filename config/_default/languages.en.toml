@@ -1,0 +1,19 @@
+locale = "en"
+label = "English"
+weight = 1
+title = "Synd1cate"
+
+[params]
+  displayName = "English"
+  isoCode = "en"
+  rtl = false
+  dateFormat = "2 January 2006"
+  description = "Dispatches on offense, defense, and the space between."
+
+[params.author]
+  name = "p0rkchop"
+  headline = "Dispatches on offense, defense, and the space between."
+  bio = ""
+  links = [
+    { github = "https://github.com/p0rkchop" },
+  ]

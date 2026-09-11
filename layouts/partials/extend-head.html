@@ -1,0 +1,6 @@
+{{/* Cloudflare Web Analytics */}}
+{{ with site.Params.cloudflareAnalytics.token }}
+  {{ if ne . "REPLACE_ME" }}
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ . }}"}'></script>
+  {{ end }}
+{{ end }}
