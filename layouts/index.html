@@ -1,0 +1,51 @@
+{{ define "main" }}
+  {{ $posts := (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+  {{ if gt (len $posts) 0 }}
+    {{ $lead := index $posts 0 }}
+    {{ $rest := after 1 $posts }}
+
+    <section class="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
+      <article class="lead-article bp-frame grid items-stretch gap-8 p-6 lg:grid-cols-2">
+        {{ with partial "functions/feature-image.html" $lead }}
+          {{ $img := $lead.Resources.Get . }}
+          {{ if not $img }}{{ $img = resources.Get . }}{{ end }}
+          {{ with $img }}
+            {{ $r := . }}
+            {{ if not (site.Params.disableImageOptimization | default false) }}
+              {{ with try (.Resize "1000x") }}{{ with .Value }}{{ $r = . }}{{ end }}{{ end }}
+            {{ end }}
+            <div class="lead-image bp-frame duotone">
+              <img src="{{ $r.RelPermalink }}" alt="{{ $lead.Title }}" loading="eager" fetchpriority="high" class="h-full w-full object-cover">
+            </div>
+          {{ end }}
+        {{ end }}
+        <div class="flex flex-col justify-center gap-4">
+          {{ with $lead.Params.categories }}<div class="kicker">{{ index . 0 }}</div>{{ end }}
+          <h1 class="lead-title"><a href="{{ $lead.RelPermalink }}">{{ $lead.Title | emojify }}</a></h1>
+          {{ with $lead.Summary }}<p class="lead-summary">{{ . | plainify }}</p>{{ end }}
+          <div class="lead-meta">
+            {{ partial "meta/date.html" $lead.Date }}
+            <span class="dot">&middot;</span>
+            {{ partial "meta/reading-time.html" $lead }}
+          </div>
+          <a href="{{ $lead.RelPermalink }}" class="btn-primary-bp">Read the article
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </a>
+        </div>
+      </article>
+    </section>
+
+    {{ if gt (len $rest) 0 }}
+      <section class="mx-auto max-w-7xl px-4 pb-16 pt-12 sm:px-6 lg:px-8">
+        <h2 class="section-kicker">Latest Articles</h2>
+        <div class="grid w-full gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {{ range first 8 $rest }}
+            {{ partial "article-link/card.html" . }}
+          {{ end }}
+        </div>
+      </section>
+    {{ end }}
+  {{ else }}
+    {{ partial "home/profile.html" . }}
+  {{ end }}
+{{ end }}
