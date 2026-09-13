@@ -2,7 +2,7 @@
 # Acceptable parameters are name, pageRef, page, url, title, weight.
 
 [[main]]
-  name = "Articles"
+  name = "Posts"
   pageRef = "posts"
   weight = 10
 
